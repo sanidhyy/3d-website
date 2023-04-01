@@ -52,12 +52,28 @@ const Home = () => {
                 and define your own style
               </p>
 
-              <CustomButton
-                type="filled"
-                title="Customize It"
-                handleClick={() => (state.intro = false)}
-                customStyles="w-fit px-4 py-2.5 font-bold text-sm"
-              />
+              <div>
+                {/* Customize It */}
+                <CustomButton
+                  type="filled"
+                  title="Customize It"
+                  handleClick={() => (state.intro = false)}
+                  customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+                />
+
+                {/* Source Code */}
+                <CustomButton
+                  type="filled"
+                  title="Source Code"
+                  handleClick={() =>
+                    window.open(
+                      "https://github.com/Technical-Shubham-tech/3d-website",
+                      "_blank"
+                    )
+                  }
+                  customStyles="w-fit px-4 py-2.5 font-bold text-sm ml-4"
+                />
+              </div>
             </motion.div>
           </motion.div>
         </motion.section>

@@ -34,6 +34,7 @@ const CustomButton = ({
       style={generateStyle(type)}
       onClick={handleClick}
       disabled={disabled}
+      title={title}
     >
       {title}
     </button>
