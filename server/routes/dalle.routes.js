@@ -12,7 +12,7 @@ const config = new Configuration({
 
 const openai = new OpenAIApi(config);
 
-router.route("/").get((req, res) => {
+router.route("/").get((_, res) => {
   res.status(200).json({ message: "Hello from Dall.E Routes" });
 });
 
