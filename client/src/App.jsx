@@ -1,10 +1,16 @@
 import React from "react";
 
+import Canvas from "./canvas";
+import Home from "./pages/Home";
+import Customizer from "./pages/Customizer";
+
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </div>
+    <main className="app transition-all ease-in">
+      <Home />
+      <Canvas />
+      <Customizer />
+    </main>
   );
 }
 
