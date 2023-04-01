@@ -36,7 +36,7 @@ const Customizer = () => {
         state.isLogoTexture = !activeFilterTab[tabName];
         break;
 
-      case "stylistShirt":
+      case "stylishShirt":
         state.isFullTexture = !activeFilterTab[tabName];
         break;
 
@@ -44,6 +44,15 @@ const Customizer = () => {
         state.isLogoTexture = true;
         state.isFullTexture = false;
     }
+
+    // after setting the state, activeFilterTab is updated
+
+    setActiveFilterTab((prevState) => {
+      return {
+        ...prevState,
+        [tabName]: !prevState[tabName],
+      };
+    });
   };
 
   const handleDecals = (type, result) => {
@@ -126,8 +135,8 @@ const Customizer = () => {
                 key={tab.name}
                 tab={tab}
                 isFilterTab
-                isActiveTab=""
-                handleClick={() => {}}
+                isActiveTab={activeFilterTab[tab.name]}
+                handleClick={() => handleActiveFilterTab(tab.name)}
               />
             ))}
           </motion.div>
