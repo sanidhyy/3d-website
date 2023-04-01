@@ -1,3 +1,7 @@
+// Contains all helper functions to be used in site
+// Don't remove anything from here if not sure
+
+// download canvas image
 export const downloadCanvasToImage = () => {
   const canvas = document.querySelector("canvas");
   const dataURL = canvas.toDataURL();
@@ -10,13 +14,15 @@ export const downloadCanvasToImage = () => {
   document.body.removeChild(link);
 };
 
+// render file
 export const reader = (file) =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve, _) => {
     const fileReader = new FileReader();
     fileReader.onload = () => resolve(fileReader.result);
     fileReader.readAsDataURL(file);
   });
 
+// get contrasting color
 export const getContrastingColor = (color) => {
   // Remove the '#' character if it exists
   const hex = color.replace("#", "");

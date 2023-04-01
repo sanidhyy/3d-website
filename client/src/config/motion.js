@@ -1,5 +1,10 @@
+// Contains all framer-motion animation settings
+// Don't remove anything from here if not sure
+
+// transition animation
 export const transition = { type: "spring", duration: 0.8 };
 
+// slide animation
 export const slideAnimation = (direction) => {
   return {
     initial: {
@@ -22,6 +27,7 @@ export const slideAnimation = (direction) => {
   };
 };
 
+// fade animation
 export const fadeAnimation = {
   initial: {
     opacity: 0,
@@ -37,6 +43,7 @@ export const fadeAnimation = {
   },
 };
 
+// head text animation
 export const headTextAnimation = {
   initial: { x: 100, opacity: 0 },
   animate: { x: 0, opacity: 1 },
@@ -49,6 +56,7 @@ export const headTextAnimation = {
   },
 };
 
+// head content animation
 export const headContentAnimation = {
   initial: { y: 100, opacity: 0 },
   animate: { y: 0, opacity: 1 },
@@ -63,6 +71,7 @@ export const headContentAnimation = {
   },
 };
 
+// head container animation
 export const headContainerAnimation = {
   initial: { x: -100, opacity: 0, transition: { ...transition, delay: 0.5 } },
   animate: { x: 0, opacity: 1, transition: { ...transition, delay: 0 } },

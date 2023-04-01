@@ -1,5 +1,6 @@
 import { proxy } from "valtio";
 
+// Default State
 const state = proxy({
   intro: true, // are we on home page?
   color: "#EFBD48", // color of t-shirt

@@ -1,5 +1,9 @@
+// Contains all constants to be used in site
+// Don't remove anything from here if not sure
+
 import { swatch, fileIcon, ai, logoShirt, stylishShirt } from "../assets";
 
+// Editor Tabs
 export const EditorTabs = [
   {
     name: "colorpicker",
@@ -15,6 +19,7 @@ export const EditorTabs = [
   },
 ];
 
+// Filter Tabs
 export const FilterTabs = [
   {
     name: "logoShirt",
@@ -26,6 +31,7 @@ export const FilterTabs = [
   },
 ];
 
+// Decal Types
 export const DecalTypes = {
   logo: {
     stateProperty: "logoDecal",

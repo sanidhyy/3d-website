@@ -6,21 +6,28 @@ import { Decal, useGLTF, useTexture } from "@react-three/drei";
 
 import state from "../store";
 
+// Shirt
 const Shirt = () => {
+  // current state snapshot
   const snap = useSnapshot(state);
+  // extract nodes and materials from model
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
 
+  // load textures
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
 
+  // update t-shirt color on snapshot updated
   useFrame((_, delta) =>
     easing.dampC(materials.lambert1.color, snap.color, 0.25, delta)
   );
 
+  // current state
   const stateString = JSON.stringify(snap);
 
   return (
     <group key={stateString}>
+      {/* mesh */}
       <mesh
         castShadow
         geometry={nodes.T_Shirt_male.geometry}

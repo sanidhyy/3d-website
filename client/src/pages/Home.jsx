@@ -12,14 +12,18 @@ import {
   slideAnimation,
 } from "../config/motion";
 
+// Home
 const Home = () => {
+  // current snapshot state
   const snap = useSnapshot(state);
 
   return (
     <HelmetProvider>
       <AnimatePresence>
+        {/* show only if on home page */}
         {snap.intro && (
           <motion.section className="home" {...slideAnimation("left")}>
+            {/* change headers */}
             <Helmet>
               <title>Home</title>
               <meta
@@ -28,6 +32,8 @@ const Home = () => {
                 content={snap.color}
               />
             </Helmet>
+
+            {/* Logo */}
             <motion.header {...slideAnimation("down")}>
               <img
                 src="/threejs.png"
@@ -37,8 +43,10 @@ const Home = () => {
               />
             </motion.header>
 
+            {/* Content */}
             <motion.div className="home-content" {...headContainerAnimation}>
               <motion.div {...headTextAnimation}>
+                {/* Heading Text */}
                 <h1 className="head-text">
                   LET'S <br className="xl:block hidden" /> DO IT.
                 </h1>
@@ -48,12 +56,14 @@ const Home = () => {
                 className="flex flex-col gap-5"
                 {...headContentAnimation}
               >
+                {/* Body Text */}
                 <p className="max-w-md font-normaltext-gray-600 text-base">
                   Create your unique and exclusive shirt with our brand-new 3D
                   customization tool. <strong>Unleash your imagination</strong>{" "}
                   and define your own style
                 </p>
 
+                {/* Buttons */}
                 <div>
                   {/* Customize It */}
                   <CustomButton

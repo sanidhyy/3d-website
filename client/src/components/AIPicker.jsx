@@ -2,9 +2,11 @@ import React from "react";
 
 import CustomButton from "./CustomButton";
 
+// AI Picker
 const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
   return (
     <div className="aipicker-container">
+      {/* user prompt */}
       <textarea
         rows={5}
         placeholder='Ask "Generate a modern texture..."'
@@ -14,8 +16,10 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
         style={{ resize: "none" }}
       />
 
+      {/* buttons */}
       <div className="flex flex-wrap gap-3">
         {generatingImg ? (
+          // loading button
           <CustomButton
             type="outline"
             title="Asking AI..."
@@ -24,12 +28,15 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
           />
         ) : (
           <>
+            {/* generate ai logo */}
             <CustomButton
               type="outline"
               title="AI Logo"
               handleClick={() => handleSubmit("logo")}
               customStyles="text-xs"
             />
+
+            {/* generate ai full */}
             <CustomButton
               type="filled"
               title="AI Full"

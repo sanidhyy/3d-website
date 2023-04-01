@@ -6,10 +6,12 @@ import { useSnapshot } from "valtio";
 
 import state from "../store";
 
+// Backdrop
 const Backdrop = () => {
   const shadows = useRef();
   const snap = useSnapshot(state);
 
+  // change position based on screen size
   useFrame((state, delta) => {
     // keep track of screen width
     const isBreakpoint = window.innerWidth <= 1260;
@@ -41,6 +43,7 @@ const Backdrop = () => {
       rotation={[Math.PI / 2, 0, 0]}
       position={[0, 0, -0.14]}
     >
+      {/* top right light */}
       <RandomizedLight
         amount={4}
         radius={9}
@@ -48,6 +51,8 @@ const Backdrop = () => {
         ambient={0.25}
         position={[5, 5, -10]}
       />
+
+      {/* right light */}
       <RandomizedLight
         amount={4}
         radius={5}

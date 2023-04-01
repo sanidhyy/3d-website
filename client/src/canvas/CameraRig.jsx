@@ -5,10 +5,12 @@ import { useSnapshot } from "valtio";
 
 import state from "../store";
 
+// Camera Rig
 const CameraRig = ({ children }) => {
   const group = useRef();
   const snap = useSnapshot(state);
 
+  // update target position based on screen width
   useFrame((state, delta) => {
     // keep track of screen width
     const isBreakpoint = window.innerWidth <= 1260;
