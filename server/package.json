@@ -4,6 +4,20 @@
   "main": "index.js",
   "type": "module",
   "license": "MIT",
+  "author": "Sanidhya Kr. Verma",
+  "description": "A 3D AI Powered T-Shirt Customizer using Three.js",
+  "keywords": [
+    "reactjs",
+    "react",
+    "threejs",
+    "ai",
+    "openai",
+    "modern-ui/ux",
+    "js",
+    "javascript",
+    "html",
+    "css"
+  ],
   "scripts": {
     "start": "nodemon index.js"
   },
