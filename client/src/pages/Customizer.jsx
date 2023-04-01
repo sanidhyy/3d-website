@@ -16,6 +16,8 @@ import {
   Tab,
 } from "../components";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 const Customizer = () => {
   const snap = useSnapshot(state);
 
@@ -76,7 +78,21 @@ const Customizer = () => {
     if (!prompt.trim()) return alert("Please enter a prompt");
 
     try {
-      // backend
+      setGeneratingImg(true);
+
+      const response = await fetch(`${backendURL}/api/v1/dalle`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt,
+        }),
+      });
+
+      const data = await response.json();
+
+      handleDecals(type, `data:image/png;base64,${data.photo}`);
     } catch (error) {
       console.log("Error in AIPICKER: ", error);
     } finally {
