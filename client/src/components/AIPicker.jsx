@@ -7,10 +7,11 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
     <div className="aipicker-container">
       <textarea
         rows={5}
-        placeholder="Ask AI..."
+        placeholder='Ask "Generate a modern texture..."'
         className="aipicker-textarea"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
+        style={{ resize: "none" }}
       />
 
       <div className="flex flex-wrap gap-3">
@@ -19,6 +20,7 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
             type="outline"
             title="Asking AI..."
             customStyles="text-xs"
+            disabled={true}
           />
         ) : (
           <>
