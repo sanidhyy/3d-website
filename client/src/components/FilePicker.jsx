@@ -10,7 +10,21 @@ const FilePicker = ({ file, setFile, readFile }) => {
           id="file-upload"
           type="file"
           accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={(e) => {
+            const file = e.target.files[0];
+
+            if (file) {
+              var image = new Image();
+
+              image.onload = function () {
+                if (this.width) {
+                  setFile(e.target.files[0]);
+                }
+              };
+
+              image.src = URL.createObjectURL(file);
+            }
+          }}
         />
 
         <label htmlFor="file-upload" className="filepicker-label">
