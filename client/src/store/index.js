@@ -5,8 +5,8 @@ const state = proxy({
   color: "#EFBD48", // color of t-shirt
   isLogoTexture: true, // are we showing logo on t-shirt?
   isFullTexture: false, // full textures
-  logoDecal: "./threejs.png", // logo
-  fullDecal: "./threejs.png", // logo
+  logoDecal: "./threejs.png", // t-shirt logo image
+  fullDecal: "./threejs.png", // t-shirt full texture image
 });
 
 export default state;
