@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
 
@@ -128,76 +128,78 @@ const Customizer = () => {
   };
 
   return (
-    <AnimatePresence>
-      {!snap.intro && (
-        <>
-          <Helmet>
-            <title>3D T-Shirt Customizer</title>
-            <meta
-              name="theme-color"
-              media="(prefers-color-scheme: dark)"
-              content={snap.color}
-            />
-          </Helmet>
-          <motion.div
-            key="custom"
-            className="absolute top-0 left-0 z-10"
-            {...slideAnimation("left")}
-          >
-            <div className="flex items-center min-h-screen">
-              <div className="editortabs-container tabs">
-                {EditorTabs.map((tab) => (
-                  <Tab
-                    key={tab.name}
-                    tab={tab}
-                    handleClick={() => setActiveEditorTab(tab.name)}
-                  />
-                ))}
+    <HelmetProvider>
+      <AnimatePresence>
+        {!snap.intro && (
+          <>
+            <Helmet>
+              <title>3D T-Shirt Customizer</title>
+              <meta
+                name="theme-color"
+                media="(prefers-color-scheme: dark)"
+                content={snap.color}
+              />
+            </Helmet>
+            <motion.div
+              key="custom"
+              className="absolute top-0 left-0 z-10"
+              {...slideAnimation("left")}
+            >
+              <div className="flex items-center min-h-screen">
+                <div className="editortabs-container tabs">
+                  {EditorTabs.map((tab) => (
+                    <Tab
+                      key={tab.name}
+                      tab={tab}
+                      handleClick={() => setActiveEditorTab(tab.name)}
+                    />
+                  ))}
 
-                {generateTabContent()}
+                  {generateTabContent()}
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          {/* Go Back Button */}
-          <motion.div
-            className="absolute z-10 top-5 right-5"
-            {...fadeAnimation}
-          >
-            <CustomButton
-              type="filled"
-              title="Go Back"
-              handleClick={() => (state.intro = true)}
-              customStyles="w-fit px-4 py-2.5 font-bold text-sm"
-            />
-          </motion.div>
-
-          <motion.div
-            className="filtertabs-container"
-            {...slideAnimation("up")}
-          >
-            {FilterTabs.map((tab) => (
-              <Tab
-                key={tab.name}
-                tab={tab}
-                isFilterTab
-                isActiveTab={activeFilterTab[tab.name]}
-                handleClick={() => handleActiveFilterTab(tab.name)}
+            {/* Go Back Button */}
+            <motion.div
+              className="absolute z-10 top-5 right-5"
+              {...fadeAnimation}
+            >
+              <CustomButton
+                type="filled"
+                title="Go Back"
+                handleClick={() => (state.intro = true)}
+                customStyles="w-fit px-4 py-2.5 font-bold text-sm"
               />
-            ))}
+            </motion.div>
 
-            {/* Download button */}
-            <button className="download-btn" onClick={downloadCanvasToImage}>
-              <img
-                src={download}
-                alt="download_image"
-                className="w-3/5 h-3/5 object-contain"
-              />
-            </button>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+            <motion.div
+              className="filtertabs-container"
+              {...slideAnimation("up")}
+            >
+              {FilterTabs.map((tab) => (
+                <Tab
+                  key={tab.name}
+                  tab={tab}
+                  isFilterTab
+                  isActiveTab={activeFilterTab[tab.name]}
+                  handleClick={() => handleActiveFilterTab(tab.name)}
+                />
+              ))}
+
+              {/* Download button */}
+              <button className="download-btn" onClick={downloadCanvasToImage}>
+                <img
+                  src={download}
+                  alt="download_image"
+                  className="w-3/5 h-3/5 object-contain"
+                />
+              </button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </HelmetProvider>
   );
 };
 
