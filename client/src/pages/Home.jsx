@@ -31,7 +31,8 @@ const Home = () => {
             <motion.header {...slideAnimation("down")}>
               <img
                 src="/threejs.png"
-                alt="threejs logo"
+                alt="Three.js"
+                title="Three.js"
                 className="w-8 h-8 object-contain"
               />
             </motion.header>
