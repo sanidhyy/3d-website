@@ -72,6 +72,19 @@ const Customizer = () => {
     });
   };
 
+  const handleSubmit = async (type) => {
+    if (!prompt.trim()) return alert("Please enter a prompt");
+
+    try {
+      // backend
+    } catch (error) {
+      console.log("Error in AIPICKER: ", error);
+    } finally {
+      setGeneratingImg(false);
+      setActiveEditorTab("");
+    }
+  };
+
   // show tab content depending on the active tab
   const generateTabContent = () => {
     switch (activeEditorTab) {
@@ -82,7 +95,14 @@ const Customizer = () => {
         return <FilePicker file={file} setFile={setFile} readFile={readFile} />;
 
       case "aipicker":
-        return <AIPicker />;
+        return (
+          <AIPicker
+            prompt={prompt}
+            setPrompt={setPrompt}
+            generatingImg={generatingImg}
+            handleSubmit={handleSubmit}
+          />
+        );
 
       default:
         return null;
