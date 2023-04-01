@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
 
-import config from "../config/config";
 import state from "../store";
 import { download } from "../assets";
 import { downloadCanvasToImage, reader } from "../config/helpers";
@@ -131,6 +131,14 @@ const Customizer = () => {
     <AnimatePresence>
       {!snap.intro && (
         <>
+          <Helmet>
+            <title>3D T-Shirt Customizer</title>
+            <meta
+              name="theme-color"
+              media="(prefers-color-scheme: dark)"
+              content={snap.color}
+            />
+          </Helmet>
           <motion.div
             key="custom"
             className="absolute top-0 left-0 z-10"
@@ -177,6 +185,15 @@ const Customizer = () => {
                 handleClick={() => handleActiveFilterTab(tab.name)}
               />
             ))}
+
+            {/* Download button */}
+            <button className="download-btn" onClick={downloadCanvasToImage}>
+              <img
+                src={download}
+                alt="download_image"
+                className="w-3/5 h-3/5 object-contain"
+              />
+            </button>
           </motion.div>
         </>
       )}

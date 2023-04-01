@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSnapshot } from "valtio";
 
@@ -18,6 +19,14 @@ const Home = () => {
     <AnimatePresence>
       {snap.intro && (
         <motion.section className="home" {...slideAnimation("left")}>
+          <Helmet>
+            <title>Home</title>
+            <meta
+              name="theme-color"
+              media="(prefers-color-scheme: dark)"
+              content={snap.color}
+            />
+          </Helmet>
           <motion.header {...slideAnimation("down")}>
             <img
               src="/threejs.png"
