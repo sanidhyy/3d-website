@@ -1,7 +1,22 @@
 {
   "name": "client",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Sanidhya Kr. Verma",
+  "description": "A 3D AI Powered T-Shirt Customizer using Three.js",
+  "keywords": [
+    "reactjs",
+    "react",
+    "threejs",
+    "ai",
+    "openai",
+    "modern-ui/ux",
+    "js",
+    "javascript",
+    "html",
+    "css"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
