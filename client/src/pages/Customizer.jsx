@@ -70,6 +70,7 @@ const Customizer = () => {
   const readFile = (type) => {
     reader(file).then((result) => {
       handleDecals(type, result);
+      setFile("");
       setActiveEditorTab("");
     });
   };
@@ -98,6 +99,7 @@ const Customizer = () => {
     } finally {
       setGeneratingImg(false);
       setActiveEditorTab("");
+      setPrompt("");
     }
   };
 
