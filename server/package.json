@@ -22,7 +22,7 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
-    "cloudinary": "^1.35.0",
+    "cloudinary": "^2.7.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.20.0",
