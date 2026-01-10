@@ -1,7 +1,7 @@
 ## Contributing
 
-[fork]: https://github.com/Technical-Shubham-tech/3d-website/fork
-[pr]: https://github.com/Technical-Shubham-tech/3d-website/compare
+[fork]: https://github.com/sanidhyy/3d-website/fork
+[pr]: https://github.com/sanidhyy/3d-website/compare
 [style]: https://standardjs.com/
 [code-of-conduct]: CODE_OF_CONDUCT.md
 
