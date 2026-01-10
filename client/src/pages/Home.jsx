@@ -79,7 +79,7 @@ const Home = () => {
                     title="Source Code"
                     handleClick={() =>
                       window.open(
-                        "https://github.com/Technical-Shubham-tech/3d-website",
+                        "https://github.com/sanidhyy/3d-website",
                         "_blank"
                       )
                     }
