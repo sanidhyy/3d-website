@@ -1,7 +1,7 @@
 // imports
 import express from "express";
 import * as dotenv from "dotenv";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 
 // initialize environment variables
 dotenv.config();
@@ -9,13 +9,10 @@ dotenv.config();
 // initialize router
 const router = express.Router();
 
-// config openai's api key
-const config = new Configuration({
+// initialize openai instance
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
-// initialize openai instance
-const openai = new OpenAIApi(config);
 
 // handle get route
 router.route("/").get((_, res) => {
@@ -29,7 +26,7 @@ router.route("/").post(async (req, res) => {
     const { prompt } = req.body;
 
     // send open ai request
-    const response = await openai.createImage({
+    const response = await openai.images.generate({
       prompt,
       n: 1,
       size: "1024x1024",
@@ -37,7 +34,7 @@ router.route("/").post(async (req, res) => {
     });
 
     // store image data from response
-    const image = response.data.data[0].b64_json;
+    const image = response.data[0].b64_json;
 
     // send 200 (ok) response
     res.status(200).json({ photo: image });
