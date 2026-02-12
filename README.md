@@ -7,7 +7,7 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/sanidhyy/3d-website/commits/main "Maintenance")
 [![GitHub branches](https://badgen.net/github/branches/sanidhyy/3d-website)](https://github.com/sanidhyy/3d-website/branches "GitHub branches")
 [![Github commits](https://badgen.net/github/commits/sanidhyy/3d-website/main)](https://github.com/sanidhyy/3d-website/commits "Github commits")
-[![Netlify Status](https://api.netlify.com/api/v1/badges/df46aeec-eb23-4a45-8dae-0153880a212c/deploy-status)](https://web-3d.netlify.app/ "Netlify Status")
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fc571aab-62d5-4a87-83e0-764832d5ce16/deploy-status)](https://web-3d.netlify.app/ "Netlify Status")
 [![GitHub issues](https://img.shields.io/github/issues/sanidhyy/3d-website)](https://github.com/sanidhyy/3d-website/issues "GitHub issues")
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/sanidhyy/3d-website)](https://github.com/sanidhyy/3d-website/pulls "GitHub pull requests")
 
