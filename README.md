@@ -45,6 +45,14 @@ PORT=8080
 
 **NOTE:** While running deployed version, it might take some time to load AI generated logos and textures first time on render. [Learn more](https://render.com/docs/free#other-limitations "Learn More")
 
+### :raising_hand: Need Help?
+
+If you run into issues during installation or setup:
+
+- **GitHub Discussions** — [Open a Q&A discussion](https://github.com/sanidhyy/3d-website/discussions/new?category=q-a) for setup and troubleshooting help.
+- **Email** — [sanidhyyy@gmail.com](mailto:sanidhyyy@gmail.com)
+- **Discord** — `@sanidhyy`
+
 ## :camera: Screenshots:
 
 ![Modern UI/UX](/.github/images/img1.png "Modern UI/UX")
