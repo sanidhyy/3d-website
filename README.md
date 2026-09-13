@@ -24,8 +24,8 @@
 ![Setup OpenAI](/.github/images/step_openai.png "Setup OpenAI")
 
 6. Start the app:
-   - **Frontend + API (recommended):** `pnpm dlx netlify-cli dev` (for AI image generation)
-   - **Frontend only:** `pnpm dev`
+   - **Frontend + API (recommended):** `npx netlify-cli dev` or `pnpm dlx netlify-cli dev` (for AI image generation)
+   - **Frontend only:** `npm run dev` or `pnpm dev`
 
 **NOTE:** Do not share your OpenAI API key publicly.
 
