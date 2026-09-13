@@ -2,13 +2,7 @@
   command = "pnpm run build"
   publish = "dist"
   functions = "netlify/functions"
-
-[build.environment]
-  NODE_VERSION = "22"
-
-[functions.dalle]
-  # Max on most Netlify plans; local netlify-cli honors this as well.
-  timeout = 26
+  ignore = "git diff HEAD^ HEAD --name-only | grep -qEv '(\\.md$|LICENSE$|\\.env\\.example$|^\\.github/|^\\.vscode/)' && exit 1 || exit 0"
 
 [[redirects]]
   from = "/api/v1/dalle"
