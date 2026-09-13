@@ -12,15 +12,15 @@
     "ai",
     "openai",
     "modern-ui/ux",
-    "js",
-    "javascript",
+    "typescript",
     "html",
     "css"
   ],
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b --noEmit && vite build",
+    "typecheck": "tsc -b --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -37,12 +37,17 @@
     "valtio": "^1.10.3"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
+    "@netlify/functions": "^6.0.0",
+    "@types/node": "^26.5.1",
+    "@types/react": "^18.3.31",
+    "@types/react-color": "^3.0.13",
+    "@types/react-dom": "^18.3.7",
+    "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.5.23",
     "tailwindcss": "^3.3.1",
+    "typescript": "^6.0.3",
     "vite": "^6.4.3"
   }
 }
