@@ -21,7 +21,7 @@
 OPENAI_API_KEY=XXXXXXXXXXXXXXXXXXXXX
 ```
 
-4. Open a terminal in the project root and run `npm install` or `yarn install`.
+4. Open a terminal in the project root and run `npm install` or `pnpm install`.
 
 5. Create a new account in [OpenAI](https://platform.openai.com/account/ "OpenAI").
 
@@ -32,8 +32,8 @@ OPENAI_API_KEY=XXXXXXXXXXXXXXXXXXXXX
 7. Copy the generated key into `OPENAI_API_KEY` in your local `.env`. For production, set the same variable in the Netlify site environment settings.
 
 8. Start the app:
-   - **Frontend + API (recommended):** `npx netlify-cli dev` (serves Vite and the Netlify Function together)
-   - **Frontend only:** `yarn dev` or `npm run dev`
+   - **Frontend + API (recommended):** `pnpm dlx netlify-cli dev` (for AI image generation)
+   - **Frontend only:** `pnpm dev`
 
 **NOTE:** Make sure you don't share these keys publicly.
 
