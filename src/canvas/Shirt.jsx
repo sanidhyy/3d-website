@@ -17,6 +17,9 @@ const Shirt = () => {
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
 
+  // set anisotropy on the texture itself (map-anisotropy on Decal crashes when map is unset)
+  logoTexture.anisotropy = 16;
+
   // update t-shirt color on snapshot updated
   useFrame((_, delta) =>
     easing.dampC(materials.lambert1.color, snap.color, 0.25, delta)
@@ -52,7 +55,6 @@ const Shirt = () => {
             rotation={[0, 0, 0]}
             scale={0.15}
             map={logoTexture}
-            map-anisotropy={16}
             depthTest={false}
             depthWrite={true}
           />
