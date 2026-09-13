@@ -1,6 +1,6 @@
 /* Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap")
-  layer(base);
+layer(base);
 @import url("https://rsms.me/inter/inter.css") layer(base);
 
 /* Tailwind CSS */
@@ -21,6 +21,13 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }
 
