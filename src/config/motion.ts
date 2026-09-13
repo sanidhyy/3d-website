@@ -1,4 +1,4 @@
-// Contains all framer-motion animation settings
+// Contains Motion for React animation settings
 // Don't remove anything from here if not sure
 
 type SlideDirection = "left" | "right" | "up" | "down";

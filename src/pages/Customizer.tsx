@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useSnapshot } from "valtio";
 
 import state from "../store";
