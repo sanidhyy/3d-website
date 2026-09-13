@@ -46,8 +46,8 @@ const Customizer = () => {
     "",
   );
   const [activeFilterTab, setActiveFilterTab] = useState<FilterTabState>({
-    logoShirt: true,
-    stylishShirt: false,
+    logoShirt: snap.isLogoTexture,
+    stylishShirt: snap.isFullTexture,
   });
 
   // handle active filter tab
