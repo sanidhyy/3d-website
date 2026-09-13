@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { easing } from "maath";
 import { useFrame } from "@react-three/fiber";
 import { AccumulativeShadows, RandomizedLight } from "@react-three/drei";
@@ -8,17 +8,17 @@ import state from "../store";
 
 // Backdrop
 const Backdrop = () => {
-  const shadows = useRef();
+  const shadows = useRef(null);
   const snap = useSnapshot(state);
 
   // change position based on screen size
-  useFrame((state, delta) => {
+  useFrame((frameState, delta) => {
     // keep track of screen width
     const isBreakpoint = window.innerWidth <= 1260;
     const isMobile = window.innerWidth <= 600;
 
     // set the initial position of the model
-    let targetPosition = [-0.4, 0, 2];
+    let targetPosition: [number, number, number] = [-0.4, 0, 2];
 
     // make model responsive
     if (snap.intro) {
@@ -30,7 +30,12 @@ const Backdrop = () => {
     }
 
     // set shadow camera position
-    easing.damp3(state.camera.position, targetPosition, 0.25, delta);
+    easing.damp3(
+      frameState.camera.position as unknown as Parameters<typeof easing.damp3>[0],
+      targetPosition,
+      0.25,
+      delta,
+    );
   });
 
   return (
@@ -39,7 +44,7 @@ const Backdrop = () => {
       temporal
       frames={60}
       alphaTest={0.85}
-      scae={10}
+      scale={10}
       rotation={[Math.PI / 2, 0, 0]}
       position={[0, 0, -0.14]}
     >

@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from "react";
+import { Component, Suspense, type ReactNode } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, Center } from "@react-three/drei";
 
@@ -16,14 +16,25 @@ const ManualLighting = () => (
   </>
 );
 
+type EnvironmentErrorBoundaryProps = {
+  children: ReactNode;
+};
+
+type EnvironmentErrorBoundaryState = {
+  hasError: boolean;
+};
+
 // Error boundary component for Environment
-class EnvironmentErrorBoundary extends Component {
-  constructor(props) {
+class EnvironmentErrorBoundary extends Component<
+  EnvironmentErrorBoundaryProps,
+  EnvironmentErrorBoundaryState
+> {
+  constructor(props: EnvironmentErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(): EnvironmentErrorBoundaryState {
     return { hasError: true };
   }
 

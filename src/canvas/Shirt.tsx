@@ -1,17 +1,28 @@
-import React from "react";
 import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
+import type { Mesh, MeshStandardMaterial } from "three";
 
 import state from "../store";
+
+type ShirtNodes = {
+  T_Shirt_male: Mesh;
+};
+
+type ShirtMaterials = {
+  lambert1: MeshStandardMaterial;
+};
 
 // Shirt
 const Shirt = () => {
   // current state snapshot
   const snap = useSnapshot(state);
   // extract nodes and materials from model
-  const { nodes, materials } = useGLTF("/shirt_baked.glb");
+  const { nodes, materials } = useGLTF("/shirt_baked.glb") as unknown as {
+    nodes: ShirtNodes;
+    materials: ShirtMaterials;
+  };
 
   // load textures
   const logoTexture = useTexture(snap.logoDecal);
@@ -22,7 +33,12 @@ const Shirt = () => {
 
   // update t-shirt color on snapshot updated
   useFrame((_, delta) =>
-    easing.dampC(materials.lambert1.color, snap.color, 0.25, delta)
+    easing.dampC(
+      materials.lambert1.color as unknown as Parameters<typeof easing.dampC>[0],
+      snap.color,
+      0.25,
+      delta,
+    ),
   );
 
   // current state
@@ -56,12 +72,15 @@ const Shirt = () => {
             scale={0.15}
             map={logoTexture}
             depthTest={false}
-            depthWrite={true}
+            // depthWrite supported at runtime by drei Decal / three mesh props
+            {...{ depthWrite: true }}
           />
         )}
       </mesh>
     </group>
   );
 };
+
+useGLTF.preload("/shirt_baked.glb");
 
 export default Shirt;

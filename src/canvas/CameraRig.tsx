@@ -1,23 +1,28 @@
-import React, { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 import { useSnapshot } from "valtio";
+import type { Group } from "three";
 
 import state from "../store";
 
+type CameraRigProps = {
+  children: ReactNode;
+};
+
 // Camera Rig
-const CameraRig = ({ children }) => {
-  const group = useRef();
+const CameraRig = ({ children }: CameraRigProps) => {
+  const group = useRef<Group>(null);
   const snap = useSnapshot(state);
 
   // update target position based on screen width
-  useFrame((state, delta) => {
+  useFrame((frameState, delta) => {
     // keep track of screen width
     const isBreakpoint = window.innerWidth <= 1260;
     const isMobile = window.innerWidth <= 600;
 
     // set the initial position of the model
-    let targetPosition = [-0.4, 0, 2];
+    let targetPosition: [number, number, number] = [-0.4, 0, 2];
 
     // make model responsive
     if (snap.intro) {
@@ -29,15 +34,20 @@ const CameraRig = ({ children }) => {
     }
 
     // set model camera position
-    easing.damp3(state.camera.position, targetPosition, 0.25, delta);
+    easing.damp3(
+      frameState.camera.position as unknown as Parameters<typeof easing.damp3>[0],
+      targetPosition,
+      0.25,
+      delta,
+    );
 
     // set the model rotation smoothly
     if (!group.current) return;
     easing.dampE(
-      group.current.rotation,
-      [state.pointer.y / 10, -state.pointer.x / 5, 0],
+      group.current.rotation as unknown as Parameters<typeof easing.dampE>[0],
+      [frameState.pointer.y / 10, -frameState.pointer.x / 5, 0],
       0.25,
-      delta
+      delta,
     );
   });
 
