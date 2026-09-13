@@ -72,7 +72,7 @@ const Shirt = () => {
             scale={0.15}
             map={logoTexture}
             depthTest={false}
-            // depthWrite supported at runtime by drei Decal / three mesh props
+            // depthWrite is applied at runtime by drei Decal / three mesh props
             {...{ depthWrite: true }}
           />
         )}

@@ -9,10 +9,10 @@ import CameraRig from "./CameraRig";
 // Manual lighting setup (replaces Environment to avoid CDN failures)
 const ManualLighting = () => (
   <>
-    <ambientLight intensity={0.6} />
-    <directionalLight position={[5, 5, 5]} intensity={0.5} castShadow />
-    <directionalLight position={[-5, 5, -5]} intensity={0.3} />
-    <pointLight position={[0, 5, 0]} intensity={0.4} />
+    <ambientLight intensity={Math.PI * 0.6} />
+    <directionalLight position={[5, 5, 5]} intensity={Math.PI * 0.5} castShadow />
+    <directionalLight position={[-5, 5, -5]} intensity={Math.PI * 0.3} />
+    <pointLight position={[0, 5, 0]} intensity={0.4} decay={0} />
   </>
 );
 
@@ -69,7 +69,7 @@ const CanvasModel = () => {
       className="w-full max-w-full h-full transition-all ease-in"
     >
       {/* base ambient light */}
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={Math.PI * 0.5} />
 
       {/* environment with error handling - falls back to manual lighting if CDN fails */}
       <SafeEnvironment />
