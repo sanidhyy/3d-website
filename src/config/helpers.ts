@@ -2,28 +2,37 @@
 // Don't remove anything from here if not sure
 
 // download canvas image
-export const downloadCanvasToImage = () => {
+export const downloadCanvasToImage = (): void => {
   const canvas = document.querySelector("canvas");
+  if (!canvas) return;
+
   const dataURL = canvas.toDataURL();
   const link = document.createElement("a");
 
   link.href = dataURL;
-  link.download = "My Customized T-Shirt.png";
+  link.download = "canvas.png";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 };
 
 // render file
-export const reader = (file) =>
-  new Promise((resolve, _) => {
+export const reader = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
     const fileReader = new FileReader();
-    fileReader.onload = () => resolve(fileReader.result);
+    fileReader.onload = () => {
+      if (typeof fileReader.result === "string") {
+        resolve(fileReader.result);
+      } else {
+        reject(new Error("Failed to read file as data URL"));
+      }
+    };
+    fileReader.onerror = () => reject(fileReader.error ?? new Error("File read failed"));
     fileReader.readAsDataURL(file);
   });
 
 // get contrasting color
-export const getContrastingColor = (color) => {
+export const getContrastingColor = (color: string): "black" | "white" => {
   // Remove the '#' character if it exists
   const hex = color.replace("#", "");
 

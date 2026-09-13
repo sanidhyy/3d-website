@@ -1,11 +1,13 @@
 // Contains all framer-motion animation settings
 // Don't remove anything from here if not sure
 
+type SlideDirection = "left" | "right" | "up" | "down";
+
 // transition animation
-export const transition = { type: "spring", duration: 0.8 };
+export const transition = { type: "spring" as const, duration: 0.8 };
 
 // slide animation
-export const slideAnimation = (direction) => {
+export const slideAnimation = (direction: SlideDirection) => {
   return {
     initial: {
       x: direction === "left" ? -100 : direction === "right" ? 100 : 0,
@@ -48,7 +50,7 @@ export const headTextAnimation = {
   initial: { x: 100, opacity: 0 },
   animate: { x: 0, opacity: 1 },
   transition: {
-    type: "spring",
+    type: "spring" as const,
     damping: 5,
     stiffness: 40,
     restDelta: 0.001,
@@ -61,7 +63,7 @@ export const headContentAnimation = {
   initial: { y: 100, opacity: 0 },
   animate: { y: 0, opacity: 1 },
   transition: {
-    type: "spring",
+    type: "spring" as const,
     damping: 7,
     stiffness: 30,
     restDelta: 0.001,

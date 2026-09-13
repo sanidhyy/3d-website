@@ -17,7 +17,14 @@ export const EditorTabs = [
     name: "aipicker",
     icon: ai,
   },
-];
+] as const;
+
+export type EditorTabName = (typeof EditorTabs)[number]["name"];
+
+export type TabItem = {
+  name: string;
+  icon: string;
+};
 
 // Filter Tabs
 export const FilterTabs = [
@@ -29,7 +36,9 @@ export const FilterTabs = [
     name: "stylishShirt",
     icon: stylishShirt,
   },
-];
+] as const;
+
+export type FilterTabName = (typeof FilterTabs)[number]["name"];
 
 // Decal Types
 export const DecalTypes = {
@@ -41,4 +50,6 @@ export const DecalTypes = {
     stateProperty: "fullDecal",
     filterTab: "stylishShirt",
   },
-};
+} as const;
+
+export type DecalKey = keyof typeof DecalTypes;
