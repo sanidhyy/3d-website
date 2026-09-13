@@ -73,7 +73,7 @@ html {
 }
 
 .aipicker-container {
-  @apply absolute left-full ml-3 glassmorphism p-3 w-[195px] h-[220px] rounded-md flex flex-col gap-4;
+  @apply absolute left-full ml-3 glassmorphism p-3 w-[210px] min-h-[248px] rounded-md flex flex-col gap-3;
 }
 
 .aipicker-textarea {
@@ -90,6 +90,19 @@ html {
 
 .tab-btn {
   @apply w-14 h-14 flex justify-center items-center cursor-pointer select-none;
+}
+
+.custom-btn-outline {
+  color: var(--btn-color);
+  background-color: transparent;
+  transition:
+    color 300ms,
+    background-color 300ms;
+}
+
+.custom-btn-outline:hover:not(:disabled) {
+  color: var(--btn-contrast);
+  background-color: var(--btn-color);
 }
 
 @utility glassmorphism {

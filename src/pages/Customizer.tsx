@@ -22,9 +22,11 @@ import {
   FilePicker,
   Tab,
 } from "../components";
+import { getOpenAIApiKey } from "../lib/openai-api-key";
 import type {
   DalleErrorResponse,
   DalleSuccessResponse,
+  GenerateResult,
 } from "../../shared/dalle";
 
 type FilterTabState = Record<FilterTabName, boolean>;
@@ -103,8 +105,19 @@ const Customizer = () => {
   };
 
   // handle input submit
-  const handleSubmit = async (type: DecalKey) => {
-    if (!prompt.trim()) return alert("Please enter a prompt");
+  const handleSubmit = async (type: DecalKey): Promise<GenerateResult> => {
+    if (!prompt.trim()) {
+      return { ok: false, message: "Please enter a prompt" };
+    }
+
+    const apiKey = getOpenAIApiKey();
+    if (!apiKey) {
+      return {
+        ok: false,
+        message: "Please add your OpenAI API key in AI Settings.",
+        needsApiKey: true,
+      };
+    }
 
     try {
       // set loading to true
@@ -118,30 +131,46 @@ const Customizer = () => {
         },
         body: JSON.stringify({
           prompt,
+          apiKey,
         }),
       });
 
-      // response data
-      const data = (await response.json()) as
-        | DalleSuccessResponse
-        | DalleErrorResponse;
+      let data: DalleSuccessResponse | DalleErrorResponse;
+      try {
+        data = (await response.json()) as
+          | DalleSuccessResponse
+          | DalleErrorResponse;
+      } catch {
+        return {
+          ok: false,
+          message:
+            response.status === 404
+              ? "AI generation needs the full app server. Run netlify-cli dev."
+              : "Failed to generate image. Please try again.",
+        };
+      }
 
       if (!response.ok || !("photo" in data) || !data.photo) {
         const message =
           "message" in data ? data.message : "Failed to generate image";
-        throw new Error(message);
+        const needsApiKey =
+          "code" in data && data.code === "invalid_api_key";
+
+        return { ok: false, message, needsApiKey };
       }
 
       // handle decals
       handleDecals(type, `data:image/png;base64,${data.photo}`);
+      setActiveEditorTab("");
+      setPrompt("");
+      return { ok: true };
     } catch (error) {
-      // handle error
-      console.log("Error in AIPICKER: ", error);
+      const message =
+        error instanceof Error ? error.message : "Failed to generate image";
+      return { ok: false, message };
     } finally {
       // set loading to false
       setGeneratingImg(false);
-      setActiveEditorTab("");
-      setPrompt("");
     }
   };
 

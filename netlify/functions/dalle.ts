@@ -1,18 +1,107 @@
 import type { Handler } from "@netlify/functions";
-import OpenAI from "openai";
+import OpenAI, { type APIError } from "openai";
 
 import type {
+  DalleErrorCode,
   DalleErrorResponse,
   DalleHelloResponse,
   DalleRequest,
   DalleSuccessResponse,
 } from "../../shared/dalle";
+import { isOpenAIApiKeyFormat } from "../../shared/dalle";
 
 const json = <T>(statusCode: number, body: T) => ({
   statusCode,
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(body),
 });
+
+const errorText = (error: unknown): string =>
+  error instanceof Error ? error.message : "";
+
+const isQuotaError = (error: APIError): boolean =>
+  error.code === "insufficient_quota" ||
+  /insufficient_quota|exceeded your current quota|billing/i.test(error.message);
+
+const isAuthError = (error: unknown): boolean => {
+  if (error instanceof OpenAI.AuthenticationError) return true;
+  if (!(error instanceof OpenAI.APIError)) return false;
+
+  return (
+    error.status === 401 ||
+    error.code === "invalid_api_key" ||
+    /invalid api key|incorrect api key|expired|revoked/i.test(error.message)
+  );
+};
+
+const mapDalleError = (
+  error: unknown,
+): { status: number; message: string; code?: DalleErrorCode } => {
+  if (isAuthError(error)) {
+    const expired = /expir/i.test(errorText(error));
+
+    return {
+      status: 401,
+      code: "invalid_api_key",
+      message: expired
+        ? "Your OpenAI API key has expired. Update it in AI Settings."
+        : "Invalid OpenAI API key. Update it in AI Settings.",
+    };
+  }
+
+  if (
+    error instanceof OpenAI.APIConnectionTimeoutError ||
+    (error instanceof Error && /timeout/i.test(error.message))
+  ) {
+    return {
+      status: 504,
+      code: "timeout",
+      message: "The request timed out. Please try again.",
+    };
+  }
+
+  if (error instanceof OpenAI.APIError) {
+    if (isQuotaError(error)) {
+      return {
+        status: 429,
+        code: "insufficient_quota",
+        message:
+          "Not enough OpenAI credits. Add billing credits, then try again.",
+      };
+    }
+
+    if (error instanceof OpenAI.RateLimitError || error.status === 429) {
+      return {
+        status: 429,
+        code: "rate_limit",
+        message: "OpenAI rate limit reached. Try again in a moment.",
+      };
+    }
+
+    if (
+      error.status === 400 &&
+      /safety|content policy|moderation/i.test(error.message)
+    ) {
+      return {
+        status: 400,
+        message: "That prompt was blocked. Try a different description.",
+      };
+    }
+
+    if (error instanceof OpenAI.PermissionDeniedError || error.status === 403) {
+      return {
+        status: 403,
+        message:
+          "This API key cannot use image generation. Check your OpenAI project permissions.",
+      };
+    }
+  }
+
+  return {
+    status: 500,
+    message: "Something went wrong while generating the image.",
+  };
+};
 
 export const handler: Handler = async (event) => {
   if (event.httpMethod === "GET") {
@@ -25,11 +114,25 @@ export const handler: Handler = async (event) => {
     return json<DalleErrorResponse>(405, { message: "Method not allowed" });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
-    return json<DalleErrorResponse>(500, {
-      message: "Something went wrong",
-      error: "OPENAI_API_KEY is not configured",
+  let prompt = "";
+  let apiKey = "";
+
+  try {
+    const body = JSON.parse(event.body || "{}") as Partial<DalleRequest>;
+    prompt = typeof body.prompt === "string" ? body.prompt.trim() : "";
+    apiKey = typeof body.apiKey === "string" ? body.apiKey.trim() : "";
+  } catch {
+    return json<DalleErrorResponse>(400, { message: "Invalid request body" });
+  }
+
+  if (!prompt) {
+    return json<DalleErrorResponse>(400, { message: "Please enter a prompt" });
+  }
+
+  if (!isOpenAIApiKeyFormat(apiKey)) {
+    return json<DalleErrorResponse>(400, {
+      message: "Please add a valid OpenAI API key in AI Settings.",
+      code: "invalid_api_key",
     });
   }
 
@@ -39,8 +142,6 @@ export const handler: Handler = async (event) => {
       timeout: 25_000,
       maxRetries: 0,
     });
-
-    const { prompt } = JSON.parse(event.body || "{}") as DalleRequest;
 
     const response = await openai.images.generate({
       model: "gpt-image-1-mini",
@@ -60,10 +161,18 @@ export const handler: Handler = async (event) => {
 
     return json<DalleSuccessResponse>(200, { photo: image });
   } catch (error) {
-    console.log("Error in fetching image from dalle", error);
-    return json<DalleErrorResponse>(500, {
-      message: "Something went wrong",
-      error: error instanceof Error ? error.message : String(error),
+    const mapped = mapDalleError(error);
+
+    console.log(
+      "Error in fetching image from dalle",
+      error instanceof OpenAI.APIError
+        ? { status: error.status, type: error.type, code: error.code }
+        : { name: error instanceof Error ? error.name : "unknown" },
+    );
+
+    return json<DalleErrorResponse>(mapped.status, {
+      message: mapped.message,
+      code: mapped.code,
     });
   }
 };

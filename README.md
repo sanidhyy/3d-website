@@ -15,27 +15,19 @@
 
 1. Make sure **Git** and **NodeJS** is installed.
 2. Clone this repository to your local computer.
-3. Create a `.env` file in the project root folder:
+3. Open a terminal in the project root and run `npm install` or `pnpm install`.
 
-```env
-OPENAI_API_KEY=XXXXXXXXXXXXXXXXXXXXX
-```
+4. Create a new account in [OpenAI](https://platform.openai.com/account/ "OpenAI").
 
-4. Open a terminal in the project root and run `npm install` or `pnpm install`.
-
-5. Create a new account in [OpenAI](https://platform.openai.com/account/ "OpenAI").
-
-6. Once you are redirected to the dashboard, go to the `API Keys` tab and create a new secret key.
+5. Once you are redirected to the dashboard, go to the `API Keys` tab and create a new secret key.
 
 ![Setup OpenAI](/.github/images/step_openai.png "Setup OpenAI")
 
-7. Copy the generated key into `OPENAI_API_KEY` in your local `.env`. For production, set the same variable in the Netlify site environment settings.
-
-8. Start the app:
+6. Start the app:
    - **Frontend + API (recommended):** `pnpm dlx netlify-cli dev` (for AI image generation)
    - **Frontend only:** `pnpm dev`
 
-**NOTE:** Make sure you don't share these keys publicly.
+**NOTE:** Do not share your OpenAI API key publicly.
 
 ### :raising_hand: Need Help?
 
