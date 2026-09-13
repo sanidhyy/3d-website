@@ -15,35 +15,27 @@
 
 1. Make sure **Git** and **NodeJS** is installed.
 2. Clone this repository to your local computer.
-3. Create .env file in both **client** and **server**.
-4. Contents of **client/.env**:
+3. Create a `.env` file in the project root folder:
 
-```
-VITE_BACKEND_URL=http://localhost:8080
-```
-
-5. Contents of **server/.env**:
-
-```
+```env
 OPENAI_API_KEY=XXXXXXXXXXXXXXXXXXXXX
-PORT=8080
 ```
 
-5. Open terminal and run `npm install` or `yarn install` in both **client** & **server**.
+4. Open a terminal in the project root and run `npm install` or `yarn install`.
 
-6. Create new account in [OpenAI](https://platform.openai.com/account/ "OpenAI").
+5. Create a new account in [OpenAI](https://platform.openai.com/account/ "OpenAI").
 
-7. Once your are redirected to dashboard, go to `API Keys` Tab > Create new secret key.
+6. Once you are redirected to the dashboard, go to the `API Keys` tab and create a new secret key.
 
 ![Setup OpenAI](/.github/images/step_openai.png "Setup OpenAI")
 
-8. Once API Key is generated, copy it to `OPENAI_API_KEY`.
+7. Copy the generated key into `OPENAI_API_KEY` in your local `.env`. For production, set the same variable in the Netlify site environment settings.
 
-9. Now app is fully configured :+1: and you can start using this app using `npm run dev` or `yarn run dev` for server and `npm start` or `yarn start` for client.
+8. Start the app:
+   - **Frontend + API (recommended):** `npx netlify-cli dev` (serves Vite and the Netlify Function together)
+   - **Frontend only:** `yarn dev` or `npm run dev`
 
-**NOTE:** Make sure you don't share these keys publicaly.
-
-**NOTE:** While running deployed version, it might take some time to load AI generated logos and textures first time on render. [Learn more](https://render.com/docs/free#other-limitations "Learn More")
+**NOTE:** Make sure you don't share these keys publicly.
 
 ### :raising_hand: Need Help?
 
@@ -67,7 +59,7 @@ If you run into issues during installation or setup:
 
 ## :gear: Built with
 
-[![React JS](https://skillicons.dev/icons?i=react)](https://react.dev/ "React JS") [![Three JS](https://skillicons.dev/icons?i=threejs)](https://threejs.org/ "Three JS") [![Node JS](https://skillicons.dev/icons?i=nodejs)](https://nodejs.org/ "Node JS") [![Express](https://skillicons.dev/icons?i=express)](https://expressjs.com/ "Express") [![Tailwind CSS](https://skillicons.dev/icons?i=tailwind)](https://tailwindcss.com/ "Tailwind CSS")
+[![React JS](https://skillicons.dev/icons?i=react)](https://react.dev/ "React JS") [![Three JS](https://skillicons.dev/icons?i=threejs)](https://threejs.org/ "Three JS") [![Node JS](https://skillicons.dev/icons?i=nodejs)](https://nodejs.org/ "Node JS") [![Netlify](https://skillicons.dev/icons?i=netlify)](https://www.netlify.com/ "Netlify") [![Tailwind CSS](https://skillicons.dev/icons?i=tailwind)](https://tailwindcss.com/ "Tailwind CSS")
 
 ## :wrench: Stats
 
@@ -94,65 +86,17 @@ You can also give this repository a star to show more people and they can use th
 
 In the project directory, you can run:
 
-### `yarn run dev`
+### `yarn dev`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Runs the Vite frontend only.\
+Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+AI image generation needs the Netlify Function — use `npx netlify-cli dev` for full local stack (UI + `/api/v1/dalle`).
 
-### `yarn test`
+### `yarn build`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Builds the app for production to the `dist` folder.
 
-### `yarn run build`
+### `yarn preview`
 
-Builds the app for production to the `dist` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## :page_with_curl: Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Previews the production build locally (static frontend only).
