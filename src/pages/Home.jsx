@@ -64,13 +64,13 @@ const Home = () => {
                 </p>
 
                 {/* Buttons */}
-                <div>
+                <div className="flex flex-wrap items-center gap-8">
                   {/* Customize It */}
                   <CustomButton
                     type="filled"
                     title="Customize It"
                     handleClick={() => (state.intro = false)}
-                    customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+                    customStyles="px-4 py-2.5 font-bold text-sm w-fit"
                   />
 
                   {/* Source Code */}
@@ -80,10 +80,10 @@ const Home = () => {
                     handleClick={() =>
                       window.open(
                         "https://github.com/sanidhyy/3d-website",
-                        "_blank"
+                        "_blank",
                       )
                     }
-                    customStyles="w-fit px-4 py-2.5 font-bold text-sm ml-4"
+                    customStyles="px-4 py-2.5 font-bold text-sm w-fit"
                   />
                 </div>
               </motion.div>
