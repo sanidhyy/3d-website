@@ -30,12 +30,7 @@ const Backdrop = () => {
     }
 
     // set shadow camera position
-    easing.damp3(
-      frameState.camera.position as unknown as Parameters<typeof easing.damp3>[0],
-      targetPosition,
-      0.25,
-      delta,
-    );
+    easing.damp3(frameState.camera.position, targetPosition, 0.25, delta);
   });
 
   return (

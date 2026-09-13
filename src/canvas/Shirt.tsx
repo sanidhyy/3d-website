@@ -33,12 +33,7 @@ const Shirt = () => {
 
   // update t-shirt color on snapshot updated
   useFrame((_, delta) =>
-    easing.dampC(
-      materials.lambert1.color as unknown as Parameters<typeof easing.dampC>[0],
-      snap.color,
-      0.25,
-      delta,
-    ),
+    easing.dampC(materials.lambert1.color, snap.color, 0.25, delta),
   );
 
   // current state

@@ -18,8 +18,8 @@ importers:
         specifier: ^9.7.0
         version: 9.7.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(three@0.186.0)
       maath:
-        specifier: ^0.5.3
-        version: 0.5.3(@types/three@0.186.0)(three@0.186.0)
+        specifier: ^0.10.8
+        version: 0.10.8(@types/three@0.186.0)(three@0.186.0)
       motion:
         specifier: ^13.2.0
         version: 13.2.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -864,12 +864,6 @@ packages:
     peerDependencies:
       '@types/three': ^0.186.0
       three: '>=0.134.0'
-
-  maath@0.5.3:
-    resolution: {integrity: sha512-ut63A4zTd9abtpi+sOHW1fPWPtAFrjK0E17eAthx1k93W/T2cWLKV5oaswyotJVDvvW1EXSdokAqhK5KOu0Qdw==}
-    peerDependencies:
-      '@types/three': ^0.186.0
-      three: '>=0.144.0'
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -1782,11 +1776,6 @@ snapshots:
       js-tokens: 4.0.0
 
   maath@0.10.8(@types/three@0.186.0)(three@0.186.0):
-    dependencies:
-      '@types/three': 0.186.0
-      three: 0.186.0
-
-  maath@0.5.3(@types/three@0.186.0)(three@0.186.0):
     dependencies:
       '@types/three': 0.186.0
       three: 0.186.0

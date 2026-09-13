@@ -34,17 +34,12 @@ const CameraRig = ({ children }: CameraRigProps) => {
     }
 
     // set model camera position
-    easing.damp3(
-      frameState.camera.position as unknown as Parameters<typeof easing.damp3>[0],
-      targetPosition,
-      0.25,
-      delta,
-    );
+    easing.damp3(frameState.camera.position, targetPosition, 0.25, delta);
 
     // set the model rotation smoothly
     if (!group.current) return;
     easing.dampE(
-      group.current.rotation as unknown as Parameters<typeof easing.dampE>[0],
+      group.current.rotation,
       [frameState.pointer.y / 10, -frameState.pointer.x / 5, 0],
       0.25,
       delta,
