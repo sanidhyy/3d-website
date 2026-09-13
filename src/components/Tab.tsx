@@ -1,10 +1,17 @@
-import React from "react";
 import { useSnapshot } from "valtio";
 
 import state from "../store";
+import type { TabItem } from "../config/constants";
+
+type TabProps = {
+  tab: TabItem;
+  isFilterTab?: boolean;
+  isActiveTab?: boolean;
+  handleClick: () => void;
+};
 
 // Tab
-const Tab = ({ tab, isFilterTab, isActiveTab, handleClick }) => {
+const Tab = ({ tab, isFilterTab, isActiveTab, handleClick }: TabProps) => {
   // current snapshot state
   const snap = useSnapshot(state);
 

@@ -1,9 +1,14 @@
-import React from "react";
-
 import CustomButton from "./CustomButton";
+import type { DecalKey } from "../config/constants";
+
+type FilePickerProps = {
+  file: File | null;
+  setFile: (file: File | null) => void;
+  readFile: (type: DecalKey) => void;
+};
 
 // File Picker
-const FilePicker = ({ file, setFile, readFile }) => {
+const FilePicker = ({ file, setFile, readFile }: FilePickerProps) => {
   return (
     <div className="filepicker-container">
       <div className="flex-1 flex flex-col">
@@ -14,23 +19,23 @@ const FilePicker = ({ file, setFile, readFile }) => {
           accept="image/*"
           onChange={(e) => {
             // get file name
-            const file = e.target.files[0];
+            const selected = e.target.files?.[0];
 
             // if any file is choosen
-            if (file) {
+            if (selected) {
               // create image instance
-              var image = new Image();
+              const image = new Image();
 
               // on image load
-              image.onload = function () {
+              image.onload = () => {
                 // check if image is correct
-                if (this.width) {
-                  setFile(e.target.files[0]);
+                if (image.width) {
+                  setFile(selected);
                 }
               };
 
               // if image is correct, set image src
-              image.src = URL.createObjectURL(file);
+              image.src = URL.createObjectURL(selected);
             }
           }}
         />
@@ -42,7 +47,7 @@ const FilePicker = ({ file, setFile, readFile }) => {
 
         {/* Uploaded File Name */}
         <p className="mt-2 text-gray-500 text-xs truncate">
-          {file === "" ? "No file selected" : file.name}
+          {file === null ? "No file selected" : file.name}
         </p>
       </div>
 

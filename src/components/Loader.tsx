@@ -1,11 +1,22 @@
-export const Loader = ({ size = 24, className = "", style = {}, ...props }) => {
+import type { CSSProperties, SVGProps } from "react";
+
+type LoaderProps = SVGProps<SVGSVGElement> & {
+  size?: number;
+};
+
+export const Loader = ({
+  size = 24,
+  className = "",
+  style = {},
+  ...props
+}: LoaderProps) => {
   return (
     <svg
       className={`animate-spin ${className}`}
       width={size}
       height={size}
       viewBox="0 0 50 50"
-      style={style}
+      style={style as CSSProperties}
       {...props}
     >
       <circle

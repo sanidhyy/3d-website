@@ -1,9 +1,20 @@
-import React from "react";
-
 import CustomButton from "./CustomButton";
+import type { DecalKey } from "../config/constants";
+
+type AIPickerProps = {
+  prompt: string;
+  setPrompt: (value: string) => void;
+  generatingImg: boolean;
+  handleSubmit: (type: DecalKey) => void;
+};
 
 // AI Picker
-const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
+const AIPicker = ({
+  prompt,
+  setPrompt,
+  generatingImg,
+  handleSubmit,
+}: AIPickerProps) => {
   return (
     <div className="aipicker-container">
       {/* user prompt */}

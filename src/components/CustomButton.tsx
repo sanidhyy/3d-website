@@ -1,9 +1,19 @@
-import React from "react";
 import { useSnapshot } from "valtio";
 
 import state from "../store";
 import { getContrastingColor } from "../config/helpers";
 import { Loader } from "./Loader";
+
+type ButtonType = "filled" | "outline";
+
+type CustomButtonProps = {
+  type: ButtonType;
+  title: string;
+  customStyles?: string;
+  handleClick?: () => void;
+  disabled?: boolean;
+  showLoader?: boolean;
+};
 
 // Custom Button
 const CustomButton = ({
@@ -13,20 +23,20 @@ const CustomButton = ({
   handleClick,
   disabled = false,
   showLoader = false,
-}) => {
+}: CustomButtonProps) => {
   // current state snapshot
   const snap = useSnapshot(state);
 
   // generate style
-  const generateStyle = (type) => {
+  const generateStyle = (buttonType: ButtonType) => {
     // filled type
-    if (type === "filled") {
+    if (buttonType === "filled") {
       return {
         backgroundColor: snap.color,
         color: getContrastingColor(snap.color),
       };
       // outline type
-    } else if (type === "outline") {
+    } else if (buttonType === "outline") {
       return {
         borderWidth: "1px",
         borderColor: snap.color,
