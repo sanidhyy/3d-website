@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
@@ -6,7 +6,14 @@ import { useSnapshot } from "valtio";
 import state from "../store";
 import { download } from "../assets";
 import { downloadCanvasToImage, reader } from "../config/helpers";
-import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
+import {
+  EditorTabs,
+  FilterTabs,
+  DecalTypes,
+  type DecalKey,
+  type EditorTabName,
+  type FilterTabName,
+} from "../config/constants";
 import { fadeAnimation, slideAnimation } from "../config/motion";
 import {
   AIPicker,
@@ -15,6 +22,12 @@ import {
   FilePicker,
   Tab,
 } from "../components";
+import type {
+  DalleErrorResponse,
+  DalleSuccessResponse,
+} from "../../shared/dalle";
+
+type FilterTabState = Record<FilterTabName, boolean>;
 
 // Customizer
 const Customizer = () => {
@@ -22,21 +35,23 @@ const Customizer = () => {
   const snap = useSnapshot(state);
 
   // file state
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState<File | null>(null);
   const [prompt, setPrompt] = useState("");
 
   // img loading state
   const [generatingImg, setGeneratingImg] = useState(false);
 
   // active tab state
-  const [activeEditorTab, setActiveEditorTab] = useState("");
-  const [activeFilterTab, setActiveFilterTab] = useState({
+  const [activeEditorTab, setActiveEditorTab] = useState<EditorTabName | "">(
+    "",
+  );
+  const [activeFilterTab, setActiveFilterTab] = useState<FilterTabState>({
     logoShirt: true,
     stylishShirt: false,
   });
 
   // handle active filter tab
-  const handleActiveFilterTab = (tabName) => {
+  const handleActiveFilterTab = (tabName: FilterTabName) => {
     switch (tabName) {
       // logo texture tab
       case "logoShirt":
@@ -63,7 +78,7 @@ const Customizer = () => {
   };
 
   // handle decals
-  const handleDecals = (type, result) => {
+  const handleDecals = (type: DecalKey, result: string) => {
     // current decal type
     const decalType = DecalTypes[type];
 
@@ -77,16 +92,18 @@ const Customizer = () => {
   };
 
   // read file from input
-  const readFile = (type) => {
+  const readFile = (type: DecalKey) => {
+    if (!file) return;
+
     reader(file).then((result) => {
       handleDecals(type, result);
-      setFile("");
+      setFile(null);
       setActiveEditorTab("");
     });
   };
 
   // handle input submit
-  const handleSubmit = async (type) => {
+  const handleSubmit = async (type: DecalKey) => {
     if (!prompt.trim()) return alert("Please enter a prompt");
 
     try {
@@ -105,7 +122,15 @@ const Customizer = () => {
       });
 
       // response data
-      const data = await response.json();
+      const data = (await response.json()) as
+        | DalleSuccessResponse
+        | DalleErrorResponse;
+
+      if (!response.ok || !("photo" in data) || !data.photo) {
+        const message =
+          "message" in data ? data.message : "Failed to generate image";
+        throw new Error(message);
+      }
 
       // handle decals
       handleDecals(type, `data:image/png;base64,${data.photo}`);
