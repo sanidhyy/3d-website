@@ -18,15 +18,17 @@ export async function handler(event) {
   try {
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
+      timeout: 25_000,
+      maxRetries: 0,
     });
 
     const { prompt } = JSON.parse(event.body || "{}");
 
     const response = await openai.images.generate({
+      model: "gpt-image-1-mini",
       prompt,
-      n: 1,
       size: "1024x1024",
-      response_format: "b64_json",
+      quality: "low",
     });
 
     const image = response.data[0].b64_json;

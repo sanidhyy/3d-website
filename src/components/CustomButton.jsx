@@ -3,6 +3,7 @@ import { useSnapshot } from "valtio";
 
 import state from "../store";
 import { getContrastingColor } from "../config/helpers";
+import { Loader } from "./Loader";
 
 // Custom Button
 const CustomButton = ({
@@ -11,6 +12,7 @@ const CustomButton = ({
   customStyles,
   handleClick,
   disabled = false,
+  showLoader = false,
 }) => {
   // current state snapshot
   const snap = useSnapshot(state);
@@ -35,12 +37,13 @@ const CustomButton = ({
 
   return (
     <button
-      className={`px-2 py-1.5 flex-1 rounded-md ${customStyles}`}
+      className={`px-2 py-1.5 flex-1 rounded-md disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center gap-1.5 ${customStyles}`}
       style={generateStyle(type)}
       onClick={handleClick}
       disabled={disabled}
       title={title}
     >
+      {showLoader && disabled ? <Loader size={12} /> : null}
       {title}
     </button>
   );

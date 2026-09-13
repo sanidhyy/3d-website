@@ -8,6 +8,7 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
     <div className="aipicker-container">
       {/* user prompt */}
       <textarea
+        disabled={generatingImg}
         rows={5}
         placeholder='Ask "Generate a modern texture..."'
         className="aipicker-textarea"
@@ -24,7 +25,8 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
             type="outline"
             title="Asking AI..."
             customStyles="text-xs"
-            disabled={true}
+            disabled
+            showLoader
           />
         ) : (
           <>

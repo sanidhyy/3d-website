@@ -1,7 +1,11 @@
 [build]
-  command = "yarn build"
+  command = "pnpm run build"
   publish = "dist"
   functions = "netlify/functions"
+
+[functions.dalle]
+  # Max on most Netlify plans; local netlify-cli honors this as well.
+  timeout = 26
 
 [[redirects]]
   from = "/api/v1/dalle"
@@ -10,6 +14,6 @@
   force = true
 
 [dev]
-  command = "yarn dev"
+  command = "pnpm run dev"
   targetPort = 5173
   port = 8888
