@@ -16,9 +16,6 @@ import {
   Tab,
 } from "../components";
 
-// backend url
-const backendURL = import.meta.env.VITE_BACKEND_URL;
-
 // Customizer
 const Customizer = () => {
   // current snapshot state
@@ -97,7 +94,7 @@ const Customizer = () => {
       setGeneratingImg(true);
 
       // fetch dalle api response
-      const response = await fetch(`${backendURL}/api/v1/dalle`, {
+      const response = await fetch("/api/v1/dalle", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
