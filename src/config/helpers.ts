@@ -8,9 +8,8 @@ export const downloadCanvasToImage = (): void => {
 
   const dataURL = canvas.toDataURL();
   const link = document.createElement("a");
-
   link.href = dataURL;
-  link.download = "canvas.png";
+  link.download = `tshirt-design-${new Date().toISOString()}.png`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -27,7 +26,8 @@ export const reader = (file: File): Promise<string> =>
         reject(new Error("Failed to read file as data URL"));
       }
     };
-    fileReader.onerror = () => reject(fileReader.error ?? new Error("File read failed"));
+    fileReader.onerror = () =>
+      reject(fileReader.error ?? new Error("File read failed"));
     fileReader.readAsDataURL(file);
   });
 
