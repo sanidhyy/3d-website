@@ -10,6 +10,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/api/v1/ai-settings"
+  to = "/.netlify/functions/ai-settings"
+  status = 200
+  force = true
+
 [dev]
   command = "pnpm run dev"
   targetPort = 5173
