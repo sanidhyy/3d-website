@@ -8,7 +8,10 @@ import type {
   DalleRequest,
   DalleSuccessResponse,
 } from "../../shared/dalle";
-import { isOpenAIApiKeyFormat } from "../../shared/dalle";
+import {
+  getOpenAIApiKeyFromEvent,
+  isAiSettingsConfigError,
+} from "../lib/ai-settings-cookie";
 
 const json = <T>(statusCode: number, body: T) => ({
   statusCode,
@@ -115,12 +118,10 @@ export const handler: Handler = async (event) => {
   }
 
   let prompt = "";
-  let apiKey = "";
 
   try {
     const body = JSON.parse(event.body || "{}") as Partial<DalleRequest>;
     prompt = typeof body.prompt === "string" ? body.prompt.trim() : "";
-    apiKey = typeof body.apiKey === "string" ? body.apiKey.trim() : "";
   } catch {
     return json<DalleErrorResponse>(400, { message: "Invalid request body" });
   }
@@ -129,7 +130,21 @@ export const handler: Handler = async (event) => {
     return json<DalleErrorResponse>(400, { message: "Please enter a prompt" });
   }
 
-  if (!isOpenAIApiKeyFormat(apiKey)) {
+  let apiKey: string | null = null;
+
+  try {
+    apiKey = getOpenAIApiKeyFromEvent(event.headers);
+  } catch (error) {
+    if (isAiSettingsConfigError(error)) {
+      return json<DalleErrorResponse>(500, {
+        message: "AI settings are not configured on the server.",
+      });
+    }
+
+    throw error;
+  }
+
+  if (!apiKey) {
     return json<DalleErrorResponse>(400, {
       message: "Please add a valid OpenAI API key in AI Settings.",
       code: "invalid_api_key",

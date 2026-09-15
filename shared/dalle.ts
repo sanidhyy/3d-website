@@ -12,7 +12,6 @@ export const isOpenAIApiKeyFormat = (value: unknown): value is string => {
 
 export type DalleRequest = {
   prompt: string;
-  apiKey: string;
 };
 
 export type DalleSuccessResponse = {
