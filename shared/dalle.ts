@@ -10,8 +10,25 @@ export const isOpenAIApiKeyFormat = (value: unknown): value is string => {
   );
 };
 
+export type DalleImageType = "logo" | "full";
+
+export const isDalleImageType = (value: unknown): value is DalleImageType =>
+  value === "logo" || value === "full";
+
+export const buildDallePrompt = (
+  prompt: string,
+  type: DalleImageType,
+): string => {
+  if (type === "logo") {
+    return `Isolated T-shirt logo. Centered, readable at small size, transparent background, no mockup, no scene. Subject: ${prompt}`;
+  }
+
+  return `All-over T-shirt print. Seamless or full-bleed repeating pattern that wraps a garment, not a centered logo, no product photo, no mockup. Subject: ${prompt}`;
+};
+
 export type DalleRequest = {
   prompt: string;
+  type: DalleImageType;
 };
 
 export type DalleSuccessResponse = {

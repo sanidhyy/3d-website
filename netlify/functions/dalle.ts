@@ -1,12 +1,15 @@
 import type { Handler } from "@netlify/functions";
 import OpenAI, { type APIError } from "openai";
 
-import type {
-  DalleErrorCode,
-  DalleErrorResponse,
-  DalleHelloResponse,
-  DalleRequest,
-  DalleSuccessResponse,
+import {
+  buildDallePrompt,
+  isDalleImageType,
+  type DalleErrorCode,
+  type DalleErrorResponse,
+  type DalleHelloResponse,
+  type DalleImageType,
+  type DalleRequest,
+  type DalleSuccessResponse,
 } from "../../shared/dalle";
 import {
   getOpenAIApiKeyFromEvent,
@@ -118,16 +121,22 @@ export const handler: Handler = async (event) => {
   }
 
   let prompt = "";
+  let type: DalleImageType | "" = "";
 
   try {
     const body = JSON.parse(event.body || "{}") as Partial<DalleRequest>;
     prompt = typeof body.prompt === "string" ? body.prompt.trim() : "";
+    type = isDalleImageType(body.type) ? body.type : "";
   } catch {
     return json<DalleErrorResponse>(400, { message: "Invalid request body" });
   }
 
   if (!prompt) {
     return json<DalleErrorResponse>(400, { message: "Please enter a prompt" });
+  }
+
+  if (!type) {
+    return json<DalleErrorResponse>(400, { message: "Invalid image type" });
   }
 
   let apiKey: string | null = null;
@@ -160,9 +169,11 @@ export const handler: Handler = async (event) => {
 
     const response = await openai.images.generate({
       model: "gpt-image-1-mini",
-      prompt,
+      prompt: buildDallePrompt(prompt, type),
       size: "1024x1024",
       quality: "low",
+      output_format: "png",
+      background: type === "logo" ? "transparent" : "opaque",
     });
 
     const image = response.data?.[0]?.b64_json;

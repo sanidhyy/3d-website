@@ -122,6 +122,7 @@ const Customizer = () => {
         },
         body: JSON.stringify({
           prompt,
+          type,
         }),
       });
 
