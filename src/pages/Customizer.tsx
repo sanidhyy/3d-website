@@ -22,7 +22,6 @@ import {
   FilePicker,
   Tab,
 } from "../components";
-import { getOpenAIApiKey } from "../lib/openai-api-key";
 import type {
   DalleErrorResponse,
   DalleSuccessResponse,
@@ -110,15 +109,6 @@ const Customizer = () => {
       return { ok: false, message: "Please enter a prompt" };
     }
 
-    const apiKey = getOpenAIApiKey();
-    if (!apiKey) {
-      return {
-        ok: false,
-        message: "Please add your OpenAI API key in AI Settings.",
-        needsApiKey: true,
-      };
-    }
-
     try {
       // set loading to true
       setGeneratingImg(true);
@@ -126,12 +116,12 @@ const Customizer = () => {
       // fetch dalle api response
       const response = await fetch("/api/v1/dalle", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           prompt,
-          apiKey,
         }),
       });
 

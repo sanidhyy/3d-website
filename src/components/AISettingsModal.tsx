@@ -3,9 +3,9 @@ import { createPortal } from "react-dom";
 
 import CustomButton from "./CustomButton";
 import {
-  clearOpenAIApiKey,
-  getOpenAIApiKey,
-  setOpenAIApiKey,
+  getAiSettingsStatus,
+  removeOpenAIApiKey,
+  saveOpenAIApiKey,
 } from "../lib/openai-api-key";
 
 type AISettingsModalProps = {
@@ -54,27 +54,48 @@ const AISettingsModal = ({
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
   const [hasSavedKey, setHasSavedKey] = useState(false);
+  const [busy, setBusy] = useState<"save" | "remove" | null>(null);
+  const busyRef = useRef(busy);
+  busyRef.current = busy;
 
   useEffect(() => {
     if (!open) return;
 
-    const saved = getOpenAIApiKey() ?? "";
-    setApiKey(saved);
-    setHasSavedKey(saved.length > 0);
+    let cancelled = false;
+
+    setApiKey("");
+    setHasSavedKey(false);
     setVisible(false);
     setError("");
+    setBusy(null);
+
+    void getAiSettingsStatus({ includeKey: true })
+      .then((status) => {
+        if (cancelled) return;
+        setHasSavedKey(status.hasKey);
+        setApiKey(status.apiKey);
+      })
+      .catch((statusError) => {
+        if (cancelled) return;
+        setError(
+          statusError instanceof Error
+            ? statusError.message
+            : "Could not check your API key.",
+        );
+      });
 
     const frame = window.requestAnimationFrame(() => {
       inputRef.current?.focus();
     });
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape" && !busyRef.current) onClose();
     };
 
     document.addEventListener("keydown", onKeyDown);
 
     return () => {
+      cancelled = true;
       window.cancelAnimationFrame(frame);
       document.removeEventListener("keydown", onKeyDown);
     };
@@ -82,9 +103,14 @@ const AISettingsModal = ({
 
   if (!open) return null;
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (busy) return;
+
+    setError("");
+    setBusy("save");
+
     try {
-      setOpenAIApiKey(apiKey);
+      await saveOpenAIApiKey(apiKey);
       onKeyChange();
       onClose();
     } catch (saveError) {
@@ -93,26 +119,45 @@ const AISettingsModal = ({
           ? saveError.message
           : "Could not save your API key.",
       );
+    } finally {
+      setBusy(null);
     }
   };
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
+    if (busy) return;
+
     const confirmed = window.confirm(
       "Remove your OpenAI API key from this browser?",
     );
     if (!confirmed) return;
 
-    clearOpenAIApiKey();
-    setApiKey("");
-    setHasSavedKey(false);
-    onKeyChange();
-    onClose();
+    setError("");
+    setBusy("remove");
+
+    try {
+      await removeOpenAIApiKey();
+      setApiKey("");
+      setHasSavedKey(false);
+      onKeyChange();
+      onClose();
+    } catch (removeError) {
+      setError(
+        removeError instanceof Error
+          ? removeError.message
+          : "Could not remove your API key.",
+      );
+    } finally {
+      setBusy(null);
+    }
   };
 
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40"
-      onClick={onClose}
+      onClick={() => {
+        if (!busy) onClose();
+      }}
     >
       <div
         role="dialog"
@@ -135,7 +180,7 @@ const AISettingsModal = ({
           autoComplete="off"
           onSubmit={(event) => {
             event.preventDefault();
-            handleSave();
+            void handleSave();
           }}
         >
           <label className="flex flex-col gap-1.5 text-sm font-medium text-gray-800">
@@ -153,14 +198,16 @@ const AISettingsModal = ({
                 autoComplete="off"
                 autoCapitalize="off"
                 spellCheck={false}
-                className="w-full bg-white/60 border border-gray-300 rounded-md py-2 pl-3 pr-10 text-sm outline-hidden focus:ring-1 focus:ring-gray-500"
+                disabled={busy !== null}
+                className="w-full bg-white/60 border border-gray-300 rounded-md py-2 pl-3 pr-10 text-sm outline-hidden focus:ring-1 focus:ring-gray-500 disabled:opacity-50"
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 px-3 text-gray-600 hover:text-gray-900"
+                className="absolute inset-y-0 right-0 px-3 text-gray-600 hover:text-gray-900 disabled:opacity-50"
                 onClick={() => setVisible((current) => !current)}
                 title={visible ? "Hide API key" : "Show API key"}
                 aria-label={visible ? "Hide API key" : "Show API key"}
+                disabled={busy !== null}
               >
                 <EyeIcon hidden={visible} />
               </button>
@@ -198,22 +245,29 @@ const AISettingsModal = ({
           <div className="flex flex-wrap gap-2">
             <CustomButton
               type="filled"
-              title="Save"
+              title={busy === "save" ? "Saving..." : "Save"}
               customStyles="text-sm"
               nativeType="submit"
+              disabled={busy !== null}
+              showLoader={busy === "save"}
             />
             <CustomButton
               type="outline"
               title="Cancel"
               customStyles="text-sm"
               handleClick={onClose}
+              disabled={busy !== null}
             />
             {hasSavedKey ? (
               <CustomButton
                 type="destructive"
-                title="Remove key"
+                title={busy === "remove" ? "Removing..." : "Remove key"}
                 customStyles="text-sm"
-                handleClick={handleRemove}
+                handleClick={() => {
+                  void handleRemove();
+                }}
+                disabled={busy !== null}
+                showLoader={busy === "remove"}
               />
             ) : null}
           </div>

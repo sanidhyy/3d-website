@@ -1,8 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import CustomButton from "./CustomButton";
 import AISettingsModal from "./AISettingsModal";
-import { hasOpenAIApiKey } from "../lib/openai-api-key";
+import { getAiSettingsStatus } from "../lib/openai-api-key";
 import type { DecalKey } from "../config/constants";
 import type { GenerateResult } from "../../shared/dalle";
 
@@ -38,7 +38,7 @@ const AIPicker = ({
   handleSubmit,
 }: AIPickerProps) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [hasApiKey, setHasApiKey] = useState(() => hasOpenAIApiKey());
+  const [hasApiKey, setHasApiKey] = useState(false);
   const [generateError, setGenerateError] = useState("");
 
   const closeSettings = useCallback(() => {
@@ -46,13 +46,19 @@ const AIPicker = ({
   }, []);
 
   const refreshKeyState = useCallback(() => {
-    setHasApiKey(hasOpenAIApiKey());
+    void getAiSettingsStatus()
+      .then((status) => setHasApiKey(status.hasKey))
+      .catch(() => setHasApiKey(false));
   }, []);
+
+  useEffect(() => {
+    refreshKeyState();
+  }, [refreshKeyState]);
 
   const onGenerate = async (type: DecalKey) => {
     setGenerateError("");
 
-    if (!hasOpenAIApiKey()) {
+    if (!hasApiKey) {
       setSettingsOpen(true);
       return;
     }
