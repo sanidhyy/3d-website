@@ -16,7 +16,15 @@
 1. Make sure **Git** and **NodeJS** is installed.
 2. Clone this repository to your local computer.
 3. Open a terminal in the project root and run `npm install` or `pnpm install`.
-4. Start the app:
+4. Create a `.env` file in the project root (see `.env.example`).
+5. Generate two separate secrets with `openssl rand -hex 32` and set them as `AI_SETTINGS_COOKIE_NAME` and `VERIFICATION_SECRET`. These encrypt and name the httpOnly cookie that stores your OpenAI API key from **AI Settings**.
+
+```env
+AI_SETTINGS_COOKIE_NAME=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+VERIFICATION_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+6. Start the app:
    - **Frontend + API (recommended):** `npx netlify-cli dev` or `pnpm dlx netlify-cli dev` (for AI image generation)
    - **Frontend only:** `npm run dev` or `pnpm dev`
 
@@ -74,7 +82,7 @@ In the project directory, you can run:
 Runs the Vite frontend only.\
 Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
-AI image generation needs the Netlify Function — use `npx netlify-cli dev` for full local stack (UI + `/api/v1/dalle`).
+AI image generation needs the Netlify Function — use `npx netlify-cli dev` for the full local stack (UI + `/api/v1/dalle` + `/api/v1/ai-settings`). Set `AI_SETTINGS_COOKIE_NAME` and `VERIFICATION_SECRET` in `.env` first.
 
 ### `yarn build`
 
