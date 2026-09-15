@@ -17,5 +17,10 @@
     "esModuleInterop": true,
     "types": ["node"]
   },
-  "include": ["vite.config.ts", "netlify/functions/**/*.ts", "shared/**/*.ts"]
+  "include": [
+    "vite.config.ts",
+    "netlify/functions/**/*.ts",
+    "netlify/lib/**/*.ts",
+    "shared/**/*.ts"
+  ]
 }
