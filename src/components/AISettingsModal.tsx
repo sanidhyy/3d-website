@@ -149,7 +149,7 @@ const AISettingsModal = ({
                   setApiKey(event.target.value);
                   setError("");
                 }}
-                placeholder="sk-proj-•••••••••••••••••••••••••••••••"
+                placeholder="sk-•••••••••••••••••••••••••••••••••••"
                 autoComplete="off"
                 autoCapitalize="off"
                 spellCheck={false}

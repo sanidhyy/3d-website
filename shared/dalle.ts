@@ -1,4 +1,4 @@
-export const OPENAI_API_KEY_PREFIX = "sk-proj-";
+export const OPENAI_API_KEY_PREFIX = "sk-";
 
 export const isOpenAIApiKeyFormat = (value: unknown): value is string => {
   if (typeof value !== "string") return false;
@@ -38,4 +38,3 @@ export type DalleHelloResponse = {
 export type GenerateResult =
   | { ok: true }
   | { ok: false; message: string; needsApiKey?: boolean };
-
