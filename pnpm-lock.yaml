@@ -46,8 +46,8 @@ importers:
         version: 2.3.2(@types/react@19.2.18)(react@19.2.8)
     devDependencies:
       '@netlify/functions':
-        specifier: ^6.0.0
-        version: 6.0.0
+        specifier: ^6.0.3
+        version: 6.0.3
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.3.3(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0))
@@ -273,12 +273,12 @@ packages:
     peerDependencies:
       three: '>= 0.159.0'
 
-  '@netlify/functions@6.0.0':
-    resolution: {integrity: sha512-Pee+FoFnAtdejTkl62a7mZxj6Wx4eqVNuYyDc5T4XPJN9GaAWaUf4cZQFlf2m4Fqq0HoghjtcPKo+BZviVPPKA==}
+  '@netlify/functions@6.0.3':
+    resolution: {integrity: sha512-6KHpsR2L4VQL2gMm3VvG46xBNTga/SbOziluInR0++gkvOuQ/T2pxsxf2Rys5wOikpNY3Zv1IoE52/pWBJjZ9Q==}
     engines: {node: '>=22.12.0'}
 
-  '@netlify/types@3.0.0':
-    resolution: {integrity: sha512-zRCidsQgI4CZWrZB/kmwdPf0QbSNljakfNSLizFvrsSA3UcUrTWSBNMVKmZnob92/8ESeUN0ewXLOlffJU+ATQ==}
+  '@netlify/types@3.3.0':
+    resolution: {integrity: sha512-u/uh0vOFslJsTcG8nnynAKnTpVIakXbv3mkBG9DTqKZrDEzmfLKDZ3I7evHA3/CYUmNB24pNrzlHj2nIsqEwzg==}
     engines: {node: '>=22.12.0'}
 
   '@oxc-project/types@0.154.0':
@@ -1431,11 +1431,11 @@ snapshots:
       promise-worker-transferable: 1.0.4
       three: 0.186.0
 
-  '@netlify/functions@6.0.0':
+  '@netlify/functions@6.0.3':
     dependencies:
-      '@netlify/types': 3.0.0
+      '@netlify/types': 3.3.0
 
-  '@netlify/types@3.0.0': {}
+  '@netlify/types@3.3.0': {}
 
   '@oxc-project/types@0.154.0': {}
 

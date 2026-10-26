@@ -37,7 +37,7 @@
     "valtio": "^2.3.2"
   },
   "devDependencies": {
-    "@netlify/functions": "^6.0.0",
+    "@netlify/functions": "^6.0.3",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.5.1",
     "@types/react": "~19.2.18",
