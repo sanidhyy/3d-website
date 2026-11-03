@@ -33,7 +33,7 @@
     "react-color": "^2.19.3",
     "react-dom": "~19.2.8",
     "react-helmet-async": "^3.0.0",
-    "three": "^0.186.0",
+    "three": "^0.187.0",
     "valtio": "^2.3.2"
   },
   "devDependencies": {
