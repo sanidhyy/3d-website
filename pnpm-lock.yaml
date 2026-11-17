@@ -24,8 +24,8 @@ importers:
         specifier: ^14.13.0
         version: 14.13.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       openai:
-        specifier: ^7.47.0
-        version: 7.47.0
+        specifier: ^7.57.0
+        version: 7.57.0
       react:
         specifier: ~19.2.8
         version: 19.2.8
@@ -952,8 +952,8 @@ packages:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
 
-  openai@7.47.0:
-    resolution: {integrity: sha512-BYa2RYgocAv9WjPUJmNu8fICuA1fFhkTBEpiR3sC5L1K6v8Hnhc8pcnQEhu8l/+W1XKA+JUaBa7HpT+AK1s77w==}
+  openai@7.57.0:
+    resolution: {integrity: sha512-RbmrdE5NdfW6nGq/FaCJ3KFCZpotoExPzruQUSMCTw/ouUFO08vpvVdSmgmPxQMFAiv9EXZCEXvcWYU+n6NzsQ==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       '@aws-sdk/credential-provider-node': '>=3.972.0 <4'
@@ -1872,7 +1872,7 @@ snapshots:
 
   object-assign@4.1.1: {}
 
-  openai@7.47.0: {}
+  openai@7.57.0: {}
 
   path-key@3.1.1: {}
 
